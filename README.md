@@ -7,7 +7,7 @@
 	
 	Search for the "ear pods" then click on the "ENTER" keyword
 		
-  Waiting the time by using the Thread static class
+        Waiting the time by using the Thread static class
 		
 	Click on the 3rd item in the search list and it will open in next tab
 		
