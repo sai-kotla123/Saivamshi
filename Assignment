@@ -1,0 +1,66 @@
+package Automation;
+
+import java.util.ArrayList;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.testng.Assert;
+
+public class Assignment 
+{
+	
+
+	public static void main(String[] args) throws InterruptedException 
+	{
+		ChromeOptions co = new ChromeOptions();
+		co.addArguments("--remote-allow-origins=*");
+		WebDriver driver = new ChromeDriver(co);
+		
+		driver.get("https://www.flipkart.com/");
+		
+		driver.manage().window().maximize();
+		
+		WebElement search = driver.findElement(By.xpath("//input[@type='text']"));
+		search.sendKeys("ear pods" + Keys.ENTER);
+		
+		Thread.sleep(4000);
+		WebElement image = driver.findElement(By.xpath("(//div[@data-id='ACCGTCYRNADXCXNG']//a)[2]"));
+		image.click();
+		
+		
+		ArrayList<String> alist = new ArrayList<>(driver.getWindowHandles());
+		
+		//switch to new tab
+		driver.switchTo().window(alist.get(1));
+		WebElement Addcart = driver.findElement(By.xpath("(//li[@class='col col-6-12'])[1]"));
+		Addcart.click();
+		
+		Thread.sleep(4000);
+		WebElement Cartadded = driver.findElement(By.xpath("//div[@class='_2-uG6-']"));
+		Cartadded.click();
+		
+		Thread.sleep(4000);
+		//WebElement Readlist = driver.findElement(By.xpath("//div//span[@class='B_NuCI']"));
+		//Assert.assertEquals(Readlist, "Apple AirPods Pro (2nd generation) with MagSafe Case (USB-C) Bluetooth Headset");
+		
+		//driver.navigate().back();
+		//(//a[@id='nav-cart']//span)[1]
+		
+		WebElement Readcartname = driver.findElement(By.xpath("(//li[@class='col col-6-12'])[1]"));
+		Assert.assertEquals("GO TO CART", Readcartname.getText());
+		
+		driver.switchTo().window(alist.get(0));
+		
+		driver.navigate().refresh();
+		
+        WebElement Cartlistparent = driver.findElement(By.xpath("//div[@class='YUhWwv']//div"));
+		
+		Assert.assertEquals("1", Cartlistparent.getText());
+		driver.quit();
+	}
+
+}
